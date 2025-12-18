@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ConcertHub.Data;
 using ConcertHub.HeplApp;
+using ConcertHub.Repositories;
 namespace ConcertHub
 {
     public class Program
@@ -13,7 +14,12 @@ namespace ConcertHub
             builder.Services.AddDbContext<DBApp>(options =>
                 options.UseSqlServer(connectionString));
             // Add services to the container.
-
+          
+            builder.Services.AddScoped<ArtistRepository, ArtistRepo>();
+            builder.Services.AddScoped<VenueRepository, VenueRepo>();
+            builder.Services.AddScoped<ConcertRepository, ConcertRepo>();
+            builder.Services.AddScoped<TicketRepository, TicketRepo>();
+            builder.Services.AddScoped<UserRepository, UserRepo>();
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
@@ -49,6 +55,7 @@ namespace ConcertHub
                     logger.LogError(ex, "An error occurred while seeding the database.");
                 }
             }
+           
             app.Run();
         }
     }
